@@ -8,18 +8,21 @@
 using namespace std;
 
 int checksum;
+int tmp;
 ifstream file;
 string line;
 stringstream stringStream;
 vector<int> lineValues;
+pair<vector<int>::iterator, vector<int>::iterator> MinMax;
 
 int main() {
 	file.open("input.txt");
 	while (getline(file,line)){
 		stringStream.str(line);
-		int tmp = 0;
 		while (stringStream >> tmp) lineValues.push_back(tmp);
-		checksum += *max_element(lineValues.begin(), lineValues.end()) - *min_element(lineValues.begin(), lineValues.end());
+		MinMax = minmax_element(lineValues.begin(), lineValues.end());
+		checksum += *MinMax.second - *MinMax.first;
+
 		lineValues.clear();
 		stringStream.clear();
 	}
